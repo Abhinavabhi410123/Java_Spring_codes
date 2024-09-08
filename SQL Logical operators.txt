@@ -1,0 +1,21 @@
+SQL Logical operators
+
+Operator 
+and - true If both the conditions are true
+or  - true if one of the conditons is true
+not - 
+
+in operator:
+select * from student where mobile no in (222,333)
+select * from  student where mobile not in (222,333)
+in operator evaluates multiple columns on a single data column.
+
+Like operator:
+
+
+Schema:
+1.A database schema is a logical representation of data that shows how the data in a database should be stored logically.
+2.it shows how the data is organized and the relationship between the tables.
+
+ALIAS:
+Which is used for tables and columns using 'AS' keyword . 

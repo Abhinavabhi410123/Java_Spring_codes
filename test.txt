@@ -1,0 +1,834 @@
+
+mysql> use hello;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_hello |
++-----------------+
+| demo            |
+| demo2           |
+| movies          |
+| movies1         |
+| new             |
+| parent          |
+| parent1         |
+| student         |
+| uniquedemo2     |
++-----------------+
+9 rows in set (0.01 sec)
+
+mysql> create table worker(
+    -> worker_id int,
+    -> first_name varchar(15),
+    -> last_name varchar(15),
+    -> salary bigint,
+    -> joining_date date,
+    -> Department varchar(10));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> explain table worker;
++----+-------------+--------+------------+------+---------------+------+---------+------+------+----------+-------+
+| id | select_type | table  | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra |
++----+-------------+--------+------------+------+---------------+------+---------+------+------+----------+-------+
+|  1 | SIMPLE      | worker | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    1 |   100.00 | NULL  |
++----+-------------+--------+------------+------+---------------+------+---------+------+------+----------+-------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> drop table worker;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table worker(
+    -> w_id int,
+    -> f_name varchar(15),
+    -> l_name varchar(15),
+    -> salary bigint,
+    -> joining_date varchar(15),
+    -> department varchar(15)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into worker values
+    -> (1,'monika','arora',100000,'20-02-14 9:00','hr');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into worker values
+    -> (2,'niharika','verma',80000,'11-06-14 9:00','admin')
+,
+    -> (3,'vishal','singhal',300000,'20-02-14 9:00','hr'),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> insert into worker values
+    -> (2,'niharika','verma',80000,'11-06-14 9:00','admin');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from worker;
++------+----------+--------+--------+---------------+------------+
+| w_id | f_name   | l_name | salary | joining_date  | department |
++------+----------+--------+--------+---------------+------------+
+|    1 | monika   | arora  | 100000 | 20-02-14 9:00 | hr         |
+|    2 | niharika | verma  |  80000 | 11-06-14 9:00 | admin
+      |
++------+----------+--------+--------+---------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into worker values
+    -> (3,'vishal','singhal',300000,'20-02-14 9:00','hr');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into worker values
+    -> (4,'amitabh','singh',500000,'20-02-14 9:00','admin')
+;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into worker values
+    -> (5,'vivek','bhati',500000,'11-02-14 9:00','account')
+;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into worker values
+    -> (5,'vivek','bhati',500000,'11-06^C4 9:00','admin');
+mysql> update worker set department = 'admin' where w_id=5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+mysql> select * from worker;
++------+----------+---------+--------+---------------+------------+
+| w_id | f_name   | l_name  | salary | joining_date  | department |
++------+----------+---------+--------+---------------+------------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      |
+|    5 | vivek    | bhati   | 500000 | 11-02-14 9:00 | admin      |
++------+----------+---------+--------+---------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update worker set joining_date = '11-06-14 9:00' whe
+re w_id=5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from worker;
++------+----------+---------+--------+---------------+------------+
+| w_id | f_name   | l_name  | salary | joining_date  | department |
++------+----------+---------+--------+---------------+------------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      |
+|    5 | vivek    | bhati   | 500000 | 11-06-14 9:00 | admin      |
++------+----------+---------+--------+---------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into worker values
+    -> (6,'vipu','diwan',200000,'11-06-14 9:00','account');
+
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into worker values
+    -> (7,'satish','kumar',75000,'20-01-14 9:00','account')
+;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into worker values
+    -> (7,'geetika','chauhan',90000,'11-04-14 9:00','admin'
+);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into worker values
+    -> (7,'geetika','chauhan',90000,'11-04-14 9:00','adm^C'
+mysql> select * from worker
+    -> ;
++------+----------+---------+--------+---------------+------------+
+| w_id | f_name   | l_name  | salary | joining_date  | department |
++------+----------+---------+--------+---------------+------------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      |
+|    5 | vivek    | bhati   | 500000 | 11-06-14 9:00 | admin      |
+|    6 | vipu     | diwan   | 200000 | 11-06-14 9:00 | account    |
+|    7 | satish   | kumar   |  75000 | 20-01-14 9:00 | account    |
+|    7 | geetika  | chauhan |  90000 | 11-04-14 9:00 | admin      |
++------+----------+---------+--------+---------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> update worker set id = 8 where f_name = 'geetika';
+ERROR 1054 (42S22): Unknown column 'id' in 'field list'
+mysql> update worker set w_id = 8 where f_name = 'geetika';
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from worker;
++------+----------+---------+--------+---------------+------------+
+| w_id | f_name   | l_name  | salary | joining_date  | department |
++------+----------+---------+--------+---------------+------------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      |
+|    5 | vivek    | bhati   | 500000 | 11-06-14 9:00 | admin      |
+|    6 | vipu     | diwan   | 200000 | 11-06-14 9:00 | account    |
+|    7 | satish   | kumar   |  75000 | 20-01-14 9:00 | account    |
+|    8 | geetika  | chauhan |  90000 | 11-04-14 9:00 | admin      |
++------+----------+---------+--------+---------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> alter table worker add primary key(w_id);
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> explain worker;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| w_id         | int         | NO   | PRI | NULL    |       |
+| f_name       | varchar(15) | YES  |     | NULL    |       |
+| l_name       | varchar(15) | YES  |     | NULL    |       |
+| salary       | bigint      | YES  |     | NULL    |       |
+| joining_date | varchar(15) | YES  |     | NULL    |       |
+| department   | varchar(15) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> create table(
+    -> r_id int,bonus_date varchar(10),bonus int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(
+r_id int,bonus_date varchar(10),bonus int)' at line 1
+mysql> create table(
+    -> r_id int,bonus_date varchar(10),bonus int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(
+r_id int,bonus_date varchar(10),bonus int)' at line 1
+mysql> create table bonus(
+    -> r_id int,bonus_date varchar(10),bonus int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into bonus values
+    -> (1,'20-02-16 0:00',5000),
+    -> (2,'11-06-16 0:00',3000),
+    -> (2,'11-06-16^C:00',4000),
+mysql> insert into bonus values
+    -> (1,'20-02-16 0:00',5000),
+    -> (2,'11-06-16 0:00',3000),
+    -> (3,'20-02-16 0:00',4000),
+    -> (1,'20-02-16 0:00',4500),
+    -> (2,'11-06-16 0:00',3500);
+mysql> create table bonus(
+    -> r_id int,bonus_date varchar(20),bonus int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into bonus values
+    -> (1,'20-02-16 0:00',5000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into bonus values
+    -> (2,'11-06-16 0:00',3000),
+    -> (3,'20-02-16 0:00',4000);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select *from bonus
+    -> ;
++------+---------------+-------+
+| r_id | bonus_date    | bonus |
++------+---------------+-------+
+|    1 | 20-02-16 0:00 |  5000 |
+|    2 | 11-06-16 0:00 |  3000 |
+|    3 | 20-02-16 0:00 |  4000 |
++------+---------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into bonus values
+    -> (1,'20-02-16 0:00',4500),
+    -> (2,'11-06-16 0:00',3500);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from bonus;
++------+---------------+-------+
+| r_id | bonus_date    | bonus |
++------+---------------+-------+
+|    1 | 20-02-16 0:00 |  5000 |
+|    2 | 11-06-16 0:00 |  3000 |
+|    3 | 20-02-16 0:00 |  4000 |
+|    1 | 20-02-16 0:00 |  4500 |
+|    2 | 11-06-16 0:00 |  3500 |
++------+---------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table title(
+    -> int r_id , title varchar(20) , date varchar(20)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int r_id , title varchar(20) , date varchar(20)
+)' at line 2
+mysql> create table title(
+    ->  r_id int, title varchar(20) , date varchar(20)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into title values
+    -> (1,'manager','20-02-16 0:00');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into title values
+    -> (2,'executive','11-06-16 0:00'),
+    -> (8,'executive','11-06-16 0:00'),
+    -> (5,'manager','11-06-16 0:00'),
+    -> (4,'asst.manager','11-06-16 0:00'),
+    -> (7,'executive','11-06-16 0:00');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> alter table title add foreign key(r_id) refers worker(w_i^C;ad','11-06-16 0:00'),
+mysql> ^C,'lead','11-06-16 0:00');
+mysql> ^C 2 rows affected (0.01 sec)
+mysql> (3,'lead','11-06-16 0:00');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3,'lead','11-06-16 0:00')' at line 1         |
+mysql>       ---------+---------------+
+|    1 | manager      | 20-02-16 0:00 |
+|    2 | executive    | 11-06-16 0:00 |
+|    8 | executive    | 11-06-16 0:00 |
+|    5 | manager      | 11-06-16 0:00 |
+|    4 | asst.manager | 11-06-16 0:00 |
+|    7 | executive    | 11-06-16 0:00 |
+|    6 | lead         | 11-06-16 0:00 |
+|    3 | lead         | 11-06-16 0:00 |
++------+--------------+---------------+
+8 rows in set (0.00 sec)
+
+mysql> alter table add foreign key(r_id) refers worker(w_id
+);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add foreign key(r_id) refers worker(w_id)' at line 1
+mysql> alter table title add foreign key(r_id) refers worke
+r(w_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'refers worker(w_id)' at line 1
+mysql> alter table title add foreign key(r_id) refers worker(w_id);
+
+
+
+mysql> use hello
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_hello |
++-----------------+
+| bonus           |
+| demo            |
+| demo2           |
+| movies          |
+| movies1         |
+| new             |
+| parent          |
+| parent1         |
+| student         |
+| title           |
+| uniquedemo2     |
+| worker          |
++-----------------+
+12 rows in set (0.00 sec)
+
+mysql> alter table worker add address varchar(20);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from worker;
++------+----------+---------+--------+---------------+------------+---------+
+| w_id | f_name   | l_name  | salary | joining_date  | department | address |
++------+----------+---------+--------+---------------+------------+---------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         | NULL    |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      | NULL    |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         | NULL    |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      | NULL    |
+|    5 | vivek    | bhati   | 500000 | 11-06-14 9:00 | admin      | NULL    |
+|    6 | vipu     | diwan   | 200000 | 11-06-14 9:00 | account    | NULL    |
+|    7 | satish   | kumar   |  75000 | 20-01-14 9:00 | account    | NULL    |
+|    8 | geetika  | chauhan |  90000 | 11-04-14 9:00 | admin      | NULL    |
++------+----------+---------+--------+---------------+------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> alter table worker add gender char;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from worker;
++------+----------+---------+--------+---------------+------------+---------+--------+
+| w_id | f_name   | l_name  | salary | joining_date  | department | address | gender |
++------+----------+---------+--------+---------------+------------+---------+--------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         | NULL    | NULL   |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      | NULL    | NULL   |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         | NULL    | NULL   |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      | NULL    | NULL   |
+|    5 | vivek    | bhati   | 500000 | 11-06-14 9:00 | admin      | NULL    | NULL   |
+|    6 | vipu     | diwan   | 200000 | 11-06-14 9:00 | account    | NULL    | NULL   |
+|    7 | satish   | kumar   |  75000 | 20-01-14 9:00 | account    | NULL    | NULL   |
+|    8 | geetika  | chauhan |  90000 | 11-04-14 9:00 | admin      | NULL    | NULL   |
++------+----------+---------+--------+---------------+------------+---------+--------+
+8 rows in set (0.00 sec)
+
+
+question 1.
+mysql> update table set adress = 'india' where w_id=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table set adress = 'india' where w_id=1' at line 1
+mysql> update worker set adress = 'india' where w_id=1;
+ERROR 1054 (42S22): Unknown column 'adress' in 'field list'
+mysql> update worker set address = 'india' where w_id=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set address = 'india' where w_id=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set address = 'india' where w_id=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set address = 'india' where w_id=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set address = 'india' where w_id=5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set address = 'india' where w_id=6;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set address = 'india' where w_id=7;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set address = 'india' where w_id=8;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from worker;
++------+----------+---------+--------+---------------+------------+---------+--------+
+| w_id | f_name   | l_name  | salary | joining_date  | department | address | gender |
++------+----------+---------+--------+---------------+------------+---------+--------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         | india   | NULL   |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      | india   | NULL   |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         | india   | NULL   |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      | india   | NULL   |
+|    5 | vivek    | bhati   | 500000 | 11-06-14 9:00 | admin      | india   | NULL   |
+|    6 | vipu     | diwan   | 200000 | 11-06-14 9:00 | account    | india   | NULL   |
+|    7 | satish   | kumar   |  75000 | 20-01-14 9:00 | account    | india   | NULL   |
+|    8 | geetika  | chauhan |  90000 | 11-04-14 9:00 | admin      | india   | NULL   |
++------+----------+---------+--------+---------------+------------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> update worker set gender = 'm' where w_id=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set gender = 'm' where w_id=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set gender = 'm' where w_id=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set gender = 'm' where w_id=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set gender = 'm' where w_id=5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set gender = 'm' where w_id=6;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set gender = 'm' where w_id=7;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set gender = 'f' where w_id=8;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set gender = 'f' where w_id=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update worker set gender = 'f' where w_id=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from worker;
++------+----------+---------+--------+---------------+------------+---------+--------+
+| w_id | f_name   | l_name  | salary | joining_date  | department | address | gender |
++------+----------+---------+--------+---------------+------------+---------+--------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         | india   | f      |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      | india   | f      |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         | india   | m      |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      | india   | m      |
+|    5 | vivek    | bhati   | 500000 | 11-06-14 9:00 | admin      | india   | m      |
+|    6 | vipu     | diwan   | 200000 | 11-06-14 9:00 | account    | india   | m      |
+|    7 | satish   | kumar   |  75000 | 20-01-14 9:00 | account    | india   | m      |
+|    8 | geetika  | chauhan |  90000 | 11-04-14 9:00 | admin      | india   | f      |
++------+----------+---------+--------+---------------+------------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql>
+
+
+---------------------------------------------------------------------------------------
+
+question 2.
+
+mysql> select f_name AS worker_name from worker;
++-------------+
+| worker_name |
++-------------+
+| monika      |
+| niharika    |
+| vishal      |
+| amitabh     |
+| vivek       |
+| vipu        |
+| satish      |
+| geetika     |
++-------------+
+8 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------
+
+question 3.
+
+mysql> select * from title
+    -> ;
++------+--------------+---------------+
+| r_id | title        | date          |
++------+--------------+---------------+
+|    1 | manager      | 20-02-16 0:00 |
+|    2 | executive    | 11-06-16 0:00 |
+|    8 | executive    | 11-06-16 0:00 |
+|    5 | manager      | 11-06-16 0:00 |
+|    4 | asst.manager | 11-06-16 0:00 |
+|    7 | executive    | 11-06-16 0:00 |
+|    6 | lead         | 11-06-16 0:00 |
+|    3 | lead         | 11-06-16 0:00 |
++------+--------------+---------------+
+8 rows in set (0.00 sec)
+
+mysql> delete title from title where r_id = 3;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from title;
++------+--------------+---------------+
+| r_id | title        | date          |
++------+--------------+---------------+
+|    1 | manager      | 20-02-16 0:00 |
+|    2 | executive    | 11-06-16 0:00 |
+|    8 | executive    | 11-06-16 0:00 |
+|    5 | manager      | 11-06-16 0:00 |
+|    4 | asst.manager | 11-06-16 0:00 |
+|    7 | executive    | 11-06-16 0:00 |
+|    6 | lead         | 11-06-16 0:00 |
++------+--------------+---------------+
+7 rows in set (0.00 sec)
+
+mysql> delete title from title where r_id = 6;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from title;
++------+--------------+---------------+
+| r_id | title        | date          |
++------+--------------+---------------+
+|    1 | manager      | 20-02-16 0:00 |
+|    2 | executive    | 11-06-16 0:00 |
+|    8 | executive    | 11-06-16 0:00 |
+|    5 | manager      | 11-06-16 0:00 |
+|    4 | asst.manager | 11-06-16 0:00 |
+|    7 | executive    | 11-06-16 0:00 |
++------+--------------+---------------+
+6 rows in set (0.00 sec)
+
+
+
+mysql> alter table worker drop gender;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table worker drop address;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from worker;
++------+----------+---------+--------+---------------+------------+
+| w_id | f_name   | l_name  | salary | joining_date  | department |
++------+----------+---------+--------+---------------+------------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      |
+|    5 | vivek    | bhati   | 500000 | 11-06-14 9:00 | admin      |
+|    6 | vipu     | diwan   | 200000 | 11-06-14 9:00 | account    |
+|    7 | satish   | kumar   |  75000 | 20-01-14 9:00 | account    |
+|    8 | geetika  | chauhan |  90000 | 11-04-14 9:00 | admin      |
++------+----------+---------+--------+---------------+------------+
+8 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------
+
+
+question 4.
+
+mysql> select ucase(f_name) from worker;
++---------------+
+| ucase(f_name) |
++---------------+
+| MONIKA        |
+| NIHARIKA      |
+| VISHAL        |
+| AMITABH       |
+| VIVEK         |
+| VIPU          |
+| SATISH        |
+| GEETIKA       |
++---------------+
+8 rows in set (0.00 sec)
+---------------------------------------------------------------------------------------
+
+question 5.
+
+
+mysql> select distinct(department) from worker;
++------------+
+| department |
++------------+
+| hr         |
+| admin      |
+| account    |
++------------+
+3 rows in set (0.00 sec)
+---------------------------------------------------------------------------------------
+question 7.
+
+ for the right syntax to use near 'table where f_name = 'vipu'' at line 1
+mysql> select * from worker where f_name = 'vipu';
++------+--------+--------+--------+---------------+------------+---------+--------+
+| w_id | f_name | l_name | salary | joining_date  | department | address | gender |
++------+--------+--------+--------+---------------+------------+---------+--------+
+|    6 | vipu   | diwan  | 200000 | 11-06-14 9:00 | account    | india   | m      |
++------+--------+--------+--------+---------------+------------+---------+--------+
+1 row in set (0.00 sec)
+
+
+mysql> select * from worker where f_name = 'satish';
++------+--------+--------+--------+---------------+------------+---------+--------+
+| w_id | f_name | l_name | salary | joining_date  | department | address | gender |
++------+--------+--------+--------+---------------+------------+---------+--------+
+|    7 | satish | kumar  |  75000 | 20-01-14 9:00 | account    | india   | m      |
++------+--------+--------+--------+---------------+------------+---------+--------+
+1 row in set (0.00 sec)
+
+---------------------------------------------------------------------------------------
+question 6.
+
+mysql> select mid(f_name ,1,3) from worker;
++------------------+
+| mid(f_name ,1,3) |
++------------------+
+| mon              |
+| nih              |
+| vis              |
+| ami              |
+| viv              |
+| vip              |
+| sat              |
+| gee              |
++------------------+
+8 rows in set (0.00 sec)
+
+----------------------------------------------------------------------------------------
+question 8.
+mysql> select * from worker where f_name in ('vipu','satish');
++------+--------+--------+--------+---------------+------------+---------+--------+
+| w_id | f_name | l_name | salary | joining_date  | department | address | gender |
++------+--------+--------+--------+---------------+------------+---------+--------+
+|    6 | vipu   | diwan  | 200000 | 11-06-14 9:00 | account    | india   | m      |
+|    7 | satish | kumar  |  75000 | 20-01-14 9:00 | account    | india   | m      |
++------+--------+--------+--------+---------------+------------+---------+--------+
+2 rows in set (0.00 sec)
+
+
+I removed address and gender columns here which was asked in 3rd question.
+
+mysql> select * from worker where department = 'admin';
++------+----------+---------+--------+---------------+------------+
+| w_id | f_name   | l_name  | salary | joining_date  | department |
++------+----------+---------+--------+---------------+------------+
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      |
+|    5 | vivek    | bhati   | 500000 | 11-06-14 9:00 | admin      |
+|    8 | geetika  | chauhan |  90000 | 11-04-14 9:00 | admin      |
++------+----------+---------+--------+---------------+------------+
+
+mysql> select * from worker where department  like 'a%';
++------+----------+---------+--------+---------------+------------+
+| w_id | f_name   | l_name  | salary | joining_date  | department |
++------+----------+---------+--------+---------------+------------+
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      |
+|    5 | vivek    | bhati   | 500000 | 11-06-14 9:00 | admin      |
+|    6 | vipu     | diwan   | 200000 | 11-06-14 9:00 | account    |
+|    7 | satish   | kumar   |  75000 | 20-01-14 9:00 | account    |
+|    8 | geetika  | chauhan |  90000 | 11-04-14 9:00 | admin      |
++------+----------+---------+--------+---------------+------------+
+6 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------
+question 9.
+
+
+mysql> select * from worker where f_name  like '%a%';
++------+----------+---------+--------+---------------+------------+
+| w_id | f_name   | l_name  | salary | joining_date  | department |
++------+----------+---------+--------+---------------+------------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      |
+|    7 | satish   | kumar   |  75000 | 20-01-14 9:00 | account    |
+|    8 | geetika  | chauhan |  90000 | 11-04-14 9:00 | admin      |
++------+----------+---------+--------+---------------+------------+
+6 rows in set (0.00 sec)
+
+
+---------------------------------------------------------------------------------------
+
+question 10.
+
+
+mysql> select * from worker where f_name  like '%a';
++------+----------+---------+--------+---------------+------------+
+| w_id | f_name   | l_name  | salary | joining_date  | department |
++------+----------+---------+--------+---------------+------------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |
+|    8 | geetika  | chauhan |  90000 | 11-04-14 9:00 | admin      |
++------+----------+---------+--------+---------------+------------+
+3 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------
+question 11.
+
+mysql> select * from worker where f_name  like '_____h';
++------+--------+--------+--------+---------------+------------+
+| w_id | f_name | l_name | salary | joining_date  | department |
++------+--------+--------+--------+---------------+------------+
+|    7 | satish | kumar  |  75000 | 20-01-14 9:00 | account    |
++------+--------+--------+--------+---------------+------------+
+1 row in set (0.00 sec)
+
+
+---------------------------------------------------------------------------------------
+
+question 13.
+
+mysql> select count(*) from worker where department='admin';
++----------+
+| count(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.00 sec)
+
+---------------------------------------------------------------------------------------
+
+
+question 16.
+
+a.
+
+mysql> select * from worker inner join bonus where worker.w_id = bonus.r_id;
++------+----------+---------+--------+---------------+------------+------+---------------+-------+
+| w_id | f_name   | l_name  | salary | joining_date  | department | r_id | bonus_date    | bonus |
++------+----------+---------+--------+---------------+------------+------+---------------+-------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |    1 | 20-02-16 0:00 |  5000 |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |    2 | 11-06-16 0:00 |  3000 |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         |    3 | 20-02-16 0:00 |  4000 |
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |    1 | 20-02-16 0:00 |  4500 |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |    2 | 11-06-16 0:00 |  3500 |
++------+----------+---------+--------+---------------+------------+------+---------------+-------+
+5 rows in set (0.00 sec)
+
+b.
+mysql> select * from worker right outer join bonus on worker.w_id = bonus.r_id ;
++------+----------+---------+--------+---------------+------------+------+---------------+-------+
+| w_id | f_name   | l_name  | salary | joining_date  | department | r_id | bonus_date    | bonus |
++------+----------+---------+--------+---------------+------------+------+---------------+-------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |    1 | 20-02-16 0:00 |  5000 |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |    2 | 11-06-16 0:00 |  3000 |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         |    3 | 20-02-16 0:00 |  4000 |
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |    1 | 20-02-16 0:00 |  4500 |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |    2 | 11-06-16 0:00 |  3500 |
++------+----------+---------+--------+---------------+------------+------+---------------+-------+
+5 rows in set (0.00 sec)
+
+c.
+
+mysql> select * from worker left outer join bonus on worker.w_id = bonus.r_id ;
++------+----------+---------+--------+---------------+------------+------+---------------+-------+
+| w_id | f_name   | l_name  | salary | joining_date  | department | r_id | bonus_date    | bonus |
++------+----------+---------+--------+---------------+------------+------+---------------+-------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |    1 | 20-02-16 0:00 |  4500 |
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |    1 | 20-02-16 0:00 |  5000 |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |    2 | 11-06-16 0:00 |  3500 |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |    2 | 11-06-16 0:00 |  3000 |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         |    3 | 20-02-16 0:00 |  4000 |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      | NULL | NULL          |  NULL |
+|    5 | vivek    | bhati   | 500000 | 11-06-14 9:00 | admin      | NULL | NULL          |  NULL |
+|    6 | vipu     | diwan   | 200000 | 11-06-14 9:00 | account    | NULL | NULL          |  NULL |
+|    7 | satish   | kumar   |  75000 | 20-01-14 9:00 | account    | NULL | NULL          |  NULL |
+|    8 | geetika  | chauhan |  90000 | 11-04-14 9:00 | admin      | NULL | NULL          |  NULL |
++------+----------+---------+--------+---------------+------------+------+---------------+-------+
+10 rows in set (0.00 sec)
+
+
+
+
+---------------------------------------------------------------------------------------
+question 12.
+
+mysql> select * from worker where salary between 100000 and 500000;
++------+---------+---------+--------+---------------+------------+
+| w_id | f_name  | l_name  | salary | joining_date  | department |
++------+---------+---------+--------+---------------+------------+
+|    1 | monika  | arora   | 100000 | 20-02-14 9:00 | hr         |
+|    3 | vishal  | singhal | 300000 | 20-02-14 9:00 | hr         |
+|    4 | amitabh | singh   | 500000 | 20-02-14 9:00 | admin      |
+|    5 | vivek   | bhati   | 500000 | 11-06-14 9:00 | admin      |
+|    6 | vipu    | diwan   | 200000 | 11-06-14 9:00 | account    |
++------+---------+---------+--------+---------------+------------+
+5 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------
+
+
+question 14.
+
+mysql> select * from worker limit 0,10;
++------+----------+---------+--------+---------------+------------+
+| w_id | f_name   | l_name  | salary | joining_date  | department |
++------+----------+---------+--------+---------------+------------+
+|    1 | monika   | arora   | 100000 | 20-02-14 9:00 | hr         |
+|    2 | niharika | verma   |  80000 | 11-06-14 9:00 | admin      |
+|    3 | vishal   | singhal | 300000 | 20-02-14 9:00 | hr         |
+|    4 | amitabh  | singh   | 500000 | 20-02-14 9:00 | admin      |
+|    5 | vivek    | bhati   | 500000 | 11-06-14 9:00 | admin      |
+|    6 | vipu     | diwan   | 200000 | 11-06-14 9:00 | account    |
+|    7 | satish   | kumar   |  75000 | 20-01-14 9:00 | account    |
+|    8 | geetika  | chauhan |  90000 | 11-04-14 9:00 | admin      |
++------+----------+---------+--------+---------------+------------+
+8 rows in set (0.00 sec)
+
+
+---------------------------------------------------------------------------------------
